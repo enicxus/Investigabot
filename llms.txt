@@ -1,0 +1,17 @@
+# InvestigaBot
+
+> Sistema multi-agente de Inteligencia Artificial para investigación, análisis y generación automatizada de informes profesionales exportables a PDF y Markdown en tiempo real.
+
+## Información General
+- **URL Principal**: https://investigabot.vercel.app/
+- **Autor**: enicxus (https://github.com/enicxus)
+- **Tipo de Aplicación**: Web Application (Productividad, Investigación Académica y Profesional)
+- **Formatos de Salida**: Documentos PDF (.pdf), Formato Markdown (.md)
+- **Motor de IA**: Google Gemini API, Tavily Search API, LangGraph
+
+## Capacidades y Características
+- Generación automatizada de informes y reportes en tiempo real.
+- Exportación directa e instantánea a formato PDF con maquetación estructurada.
+- Exportación y copiado rápido en formato Markdown.
+- Sistema orquestado de agentes de IA: Planificación, Investigación Web, Análisis Crítico y Redacción.
+- Modo oscuro de alta fidelidad visual y soporte para dispositivos móviles.
