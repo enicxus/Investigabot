@@ -25,6 +25,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--color-fondo);
     color: var(--color-texto);
@@ -34,6 +38,25 @@ body {
     flex-direction: column;
     overflow-x: hidden;
     position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimización INP (Interaction to Next Paint) y respuesta táctil instantánea */
+button, 
+a, 
+input, 
+select, 
+textarea, 
+.btn-longitud, 
+.chip-sugerencia, 
+.btn-toggle-img, 
+.btn-nav-api,
+.btn-accion-pdf,
+.btn-primario,
+.btn-secundario {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Fondo Dinámico Ambient */
@@ -1185,4 +1208,255 @@ input.tour-highlight {
 .spin {
     animation: spin 1s linear infinite;
     display: inline-block;
+}
+
+/* =========================================================
+   DISEÑO RESPONSIVO Y COMPATIBILIDAD CON DISPOSITIVOS MÓVILES
+   ========================================================= */
+
+@media (max-width: 1024px) {
+    .contenedor-principal {
+        width: 94%;
+        margin: 1.75rem auto;
+        gap: 2rem;
+    }
+    
+    .card-glass {
+        padding: 2rem 1.5rem;
+    }
+    
+    .grafo-visual {
+        gap: 0.5rem;
+        padding: 1.5rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Barra de Navegación */
+    .barra-navegacion {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 4%;
+        align-items: stretch;
+    }
+
+    .logo {
+        justify-content: center;
+        font-size: 1.35rem;
+    }
+
+    .acciones-nav {
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .btn-nav-api {
+        min-height: 44px;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .badge {
+        font-size: 0.78rem;
+        padding: 0.45rem 0.85rem;
+        text-align: center;
+    }
+
+    /* Contenedor Principal */
+    .contenedor-principal {
+        width: 95%;
+        margin: 1.25rem auto;
+        gap: 1.5rem;
+    }
+
+    .card-glass {
+        padding: 1.5rem 1rem;
+        border-radius: 18px;
+    }
+
+    /* Sección de Entrada */
+    .seccion-entrada h1 {
+        font-size: 1.75rem;
+        line-height: 1.25;
+        text-align: center;
+    }
+
+    .subtitulo {
+        font-size: 0.95rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Formulario en Columna para Pantallas Móviles */
+    .formulario-investigacion {
+        flex-direction: column;
+        gap: 0.85rem;
+        width: 100%;
+    }
+
+    .input-contenedor {
+        width: 100%;
+    }
+
+    .formulario-investigacion input {
+        font-size: 1rem; /* Mínimo 16px para evitar auto-zoom en iOS Safari */
+        padding: 0.95rem 1rem 0.95rem 2.85rem;
+        min-height: 48px;
+    }
+
+    .selector-longitud-botones {
+        width: 100%;
+        justify-content: space-between;
+        padding: 0.3rem;
+    }
+
+    .btn-longitud {
+        flex: 1;
+        text-align: center;
+        padding: 0.75rem 0.35rem;
+        font-size: 0.88rem;
+        min-height: 44px; /* Touch target estándar */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-toggle-img {
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
+        font-size: 0.95rem;
+    }
+
+    .btn-primario {
+        width: 100%;
+        justify-content: center;
+        min-height: 50px;
+        font-size: 1rem;
+    }
+
+    /* Sugerencias Rápidas */
+    .sugerencias-rapidas {
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .chip-sugerencia {
+        font-size: 0.82rem;
+        padding: 0.6rem 0.85rem;
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    /* Grafo Visual adaptado a vertical en móvil */
+    .grafo-visual {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 1.25rem 0.75rem;
+    }
+
+    .nodo {
+        width: 100%;
+        max-width: 260px;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+    }
+
+    .flecha-conector {
+        transform: rotate(90deg);
+        margin: 0.15rem 0;
+    }
+
+    /* Terminal de logs */
+    .terminal-cuerpo {
+        height: 200px;
+        padding: 1rem;
+        font-size: 0.85rem;
+    }
+
+    /* Reporte y Acciones */
+    .reporte-cabecera {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .reporte-cabecera h2 {
+        font-size: 1.35rem;
+        justify-content: center;
+    }
+
+    .reporte-acciones {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.65rem;
+    }
+
+    .reporte-acciones button {
+        width: 100%;
+        justify-content: center;
+        min-height: 46px;
+    }
+
+    .markdown-body {
+        font-size: 0.95rem;
+        padding: 1.25rem 1rem;
+    }
+
+    /* Modales en Móvil */
+    .modal {
+        padding: 0.75rem;
+    }
+
+    .modal-contenido {
+        width: 100%;
+        max-width: 100%;
+        padding: 1.5rem 1.15rem;
+        border-radius: 18px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-cabecera h3 {
+        font-size: 1.15rem;
+    }
+
+    .campo-grupo input {
+        font-size: 1rem;
+        min-height: 46px;
+    }
+
+    /* Tour Guiado */
+    .tour-tooltip {
+        width: 92vw;
+        max-width: 320px;
+        padding: 1.25rem 1rem;
+    }
+
+    .pie-pagina {
+        padding: 1.5rem 1rem;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .seccion-entrada h1 {
+        font-size: 1.5rem;
+    }
+    
+    .logo span {
+        font-size: 1.2rem;
+    }
+    
+    .btn-longitud {
+        font-size: 0.82rem;
+        padding: 0.65rem 0.2rem;
+    }
 }
