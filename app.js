@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     lucide.createIcons();
 
+    // URL dinámica del backend (localhost en desarrollo, Render en producción)
+    const BACKEND_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+        ? `http://${window.location.hostname}:8000`
+        : "https://investigabot.onrender.com";
+
     const temaEntrada = document.getElementById("tema-entrada");
     const btnIniciar = document.getElementById("btn-iniciar");
     const tableroOrquestacion = document.getElementById("tablero-orquestacion");
@@ -271,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const llmKey = localStorage.getItem("api_key_llm") || "";
             const searchKey = localStorage.getItem("api_key_search") || "";
 
-            const response = await fetch("http://localhost:8000/investigar", {
+            const response = await fetch(`${BACKEND_URL}/investigar`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -523,10 +528,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // 2. Proxy backend
                 try {
-                    const host = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
-                        ? `http://${window.location.hostname}:8000` 
-                        : "http://localhost:8000";
-                    const res = await fetch(`${host}/proxy-imagen?url=${encodeURIComponent(urlOriginal)}`);
+                    const res = await fetch(`${BACKEND_URL}/proxy-imagen?url=${encodeURIComponent(urlOriginal)}`);
                     if (res.ok) {
                         const data = await res.json();
                         if (data.data_url) {
