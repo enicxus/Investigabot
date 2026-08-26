@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestigaBot: Investigación Autónoma</title>
+    <link rel="icon" href="data:,">
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Markdown parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Exportar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="modo-oscuro">
+    <div class="lienzo-fondo"></div>
+    
+    <header class="barra-navegacion">
+        <div class="logo">
+            <i data-lucide="cpu" class="icono-logo"></i>
+            <span>Investiga<span>Bot</span></span>
+        </div>
+        <div class="acciones-nav">
+            <button id="btn-config-api" class="btn-nav-api">
+                <i data-lucide="key"></i>
+                <span>API Keys</span>
+            </button>
+            <span class="badge status-activo">
+                <span class="punto-pulso"></span> Generador de Reportes en Tiempo Real
+            </span>
+        </div>
+    </header>
+
+    <main class="contenedor-principal">
+        <!-- Formulario -->
+        <section class="seccion-entrada card-glass">
+            <h1>Sistema Multi-Agente de Investigación con IA</h1>
+            <p class="subtitulo">Diseña y ejecuta investigaciones profesionales automatizadas en tiempo real.</p>
+            
+            <div class="formulario-investigacion">
+                <div class="input-contenedor" style="flex: 1;">
+                    <i data-lucide="search" class="icono-busqueda"></i>
+                    <input type="text" id="tema-entrada" placeholder="Ej. El impacto de la IA en la educación" autocomplete="off">
+                </div>
+                <div class="selector-longitud-botones" id="grupo-longitud">
+                    <button class="btn-longitud" data-valor="breve">Corto</button>
+                    <button class="btn-longitud activo" data-valor="estándar">Normal</button>
+                    <button class="btn-longitud" data-valor="extenso">Largo</button>
+                </div>
+                <button type="button" id="btn-toggle-img" class="btn-toggle-img activo" title="Activar/Desactivar imágenes web ilustrativas en el reporte">
+                    <i data-lucide="image"></i>
+                    <span>Imágenes</span>
+                </button>
+                <button id="btn-iniciar" class="btn-primario">
+                    <span>Iniciar Investigación</span>
+                    <i data-lucide="play" class="icono-btn"></i>
+                </button>
+            </div>
+            
+            <div class="sugerencias-rapidas">
+                <span class="chip-sugerencia" data-texto="Fusión Nuclear en 2026"><i data-lucide="zap" class="icono-neon"></i> Fusión Nuclear en 2026</span>
+                <span class="chip-sugerencia" data-texto="Agentes de IA en Salud"><i data-lucide="cpu" class="icono-neon"></i> Agentes de IA en Salud</span>
+                <span class="chip-sugerencia" data-texto="Vehículos Autónomos"><i data-lucide="car" class="icono-neon"></i> Vehículos Autónomos</span>
+            </div>
+        </section>
+
+        <!-- Estado del flujo -->
+        <section class="tablero-orquestacion" id="tablero-orquestacion" style="display: none;">
+            <h2 class="titulo-seccion"><i data-lucide="activity"></i> Flujo de Agentes en Vivo</h2>
+            
+            <div class="grafo-visual card-glass">
+                <div class="nodo" id="nodo-inicio">
+                    <div class="icono-nodo"><i data-lucide="play-circle"></i></div>
+                    <span class="nombre-nodo">Inicio</span>
+                </div>
+                <div class="flecha-conector"><i data-lucide="arrow-right"></i></div>
+                
+                <div class="nodo" id="nodo-investigador">
+                    <div class="icono-nodo"><i data-lucide="search"></i></div>
+                    <span class="nombre-nodo">Investigador</span>
+                </div>
+                <div class="flecha-conector"><i data-lucide="arrow-right"></i></div>
+                
+                <div class="nodo" id="nodo-analista">
+                    <div class="icono-nodo"><i data-lucide="bar-chart-2"></i></div>
+                    <span class="nombre-nodo">Analista</span>
+                </div>
+                <div class="flecha-conector"><i data-lucide="arrow-right"></i></div>
+                
+                <div class="nodo" id="nodo-redactor">
+                    <div class="icono-nodo"><i data-lucide="file-text"></i></div>
+                    <span class="nombre-nodo">Redactor</span>
+                </div>
+                <div class="flecha-conector"><i data-lucide="arrow-right"></i></div>
+                
+                <div class="nodo" id="nodo-fin">
+                    <div class="icono-nodo"><i data-lucide="check-circle"></i></div>
+                    <span class="nombre-nodo">Fin</span>
+                </div>
+            </div>
+
+            <div class="terminal-logs card-glass">
+                <div class="terminal-cabecera">
+                    <div class="botones-terminal">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="terminal-titulo">Registro de Actividad (Logs de LangGraph)</span>
+                </div>
+                <div class="terminal-cuerpo" id="logs-contenedor">
+                    <div class="log-linea sistema">> Listo para iniciar el proceso...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reporte -->
+        <section class="seccion-reporte" id="seccion-reporte" style="display: none;">
+            <div class="reporte-cabecera">
+                <h2><i data-lucide="file-text"></i> Reporte Generado</h2>
+                <div class="reporte-acciones">
+                    <button id="btn-descargar-pdf" class="btn-accion-pdf"><i data-lucide="file-down"></i> Descargar PDF</button>
+                    <button id="btn-descargar" class="btn-secundario"><i data-lucide="download"></i> Descargar .md</button>
+                    <button id="btn-copiar" class="btn-secundario"><i data-lucide="copy"></i> Copiar Markdown</button>
+                </div>
+            </div>
+            <div class="reporte-contenedor card-glass markdown-body" id="reporte-markdown">
+            </div>
+        </section>
+    </main>
+
+    <footer class="pie-pagina">
+        <p>Desarrollado por <a href="https://github.com/enicxus" target="_blank" rel="noopener noreferrer" class="link-autor"><i data-lucide="github"></i> enicxus</a> • InvestigaBot © 2026</p>
+    </footer>
+
+    <!-- Modal API Keys -->
+    <div class="modal" id="modal-api">
+        <div class="modal-contenido card-glass modal-tutorial">
+            <div class="modal-cabecera">
+                <h3><i data-lucide="key"></i> Configuración de Códigos API</h3>
+                <button class="btn-cerrar" id="btn-cerrar-modal-api">&times;</button>
+            </div>
+            <div class="modal-cuerpo">
+                <p>Para usar este sistema, necesitas configurar tus claves API. Puedes obtener ambas de forma <strong>gratuita</strong> en sus plataformas oficiales (o configurarlas directamente en tu archivo <code>.env</code> si descargas el proyecto):</p>
+                <div class="campo-grupo">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 4px;">
+                        <label for="api-key-llm" style="margin-bottom: 0;">Clave API de Google Gemini:</label>
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="color: #64ffda; font-size: 0.85rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
+                            Obtener gratis en Google AI Studio <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                    <input type="password" id="api-key-llm" placeholder="AIzaSy..." autocomplete="off">
+                </div>
+                <div class="campo-grupo">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 4px;">
+                        <label for="api-key-search" style="margin-bottom: 0;">Clave API de Tavily (Búsqueda Web):</label>
+                        <a href="https://app.tavily.com" target="_blank" rel="noopener noreferrer" style="color: #64ffda; font-size: 0.85rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
+                            Obtener gratis en Tavily <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                    <input type="password" id="api-key-search" placeholder="tvly-..." autocomplete="off">
+                </div>
+                
+                <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; font-size: 0.9em; border-left: 3px solid #64ffda;">
+                    <strong style="display: flex; align-items: center; gap: 8px; color: #64ffda;"><i data-lucide="shield-check"></i> Privacidad y Código Abierto</strong>
+                    <p style="margin-top: 0.5rem; margin-bottom: 0;">Si no tienes confianza en poner tus códigos API en esta página, ¡no hay problema! El código de este proyecto es totalmente abierto. Puedes ir a mi perfil de <a href="https://github.com/enicxus" target="_blank" style="color: #64ffda; text-decoration: underline;">GitHub (enicxus)</a> para descargar el proyecto y ejecutarlo en tu propia computadora de forma 100% segura.</p>
+                </div>
+
+                <button id="btn-guardar-api" class="btn-primario btn-ancho-completo" style="margin-top: 1.5rem;">Guardar Códigos API</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tour -->
+    <div class="tour-overlay" id="tour-overlay" style="display: none;"></div>
+    <div class="tour-tooltip card-glass" id="tour-tooltip" style="display: none;">
+        <div class="tour-header">
+            <span class="tour-paso-badge" id="tour-paso-badge">Paso 1/5</span>
+            <button class="btn-cerrar-tour" id="btn-cerrar-tour"><i data-lucide="x"></i></button>
+        </div>
+        <h4 id="tour-titulo">Título del Paso</h4>
+        <p id="tour-texto">Explicación del elemento resaltado.</p>
+        <div class="tour-acciones">
+            <button id="btn-tour-anterior" class="btn-secundario tour-btn-peq">Anterior</button>
+            <button id="btn-tour-siguiente" class="btn-primario tour-btn-peq">Siguiente</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
